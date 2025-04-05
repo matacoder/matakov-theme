@@ -7,7 +7,7 @@ require get_template_directory() . '/inc/bootstrap-nav-walker.php';
 require get_template_directory() . '/inc/customizer.php';
 
 if (!defined('MATAKOV_VERSION')) {
-    define('MATAKOV_VERSION', '1.1.6');
+    define('MATAKOV_VERSION', '1.1.7');
 }
 
 /**
@@ -330,3 +330,57 @@ add_filter('the_excerpt', 'matakov_excerpt_filter');
  * Отключает автоматическое добавление абзацев в короткие описания
  */
 remove_filter('the_excerpt', 'wpautop');
+
+/**
+ * Создает продвинутую пагинацию для кастомных запросов
+ * 
+ * @param object $query Объект WP_Query (если null, используется глобальный)
+ * @param array $args Дополнительные аргументы пагинации
+ */
+function matakov_custom_pagination($query = null, $args = array()) {
+    global $wp_query;
+    
+    // Если запрос не указан, используем глобальный
+    if ($query === null) {
+        $query = $wp_query;
+    }
+    
+    // Получаем общее количество страниц
+    $total = $query->max_num_pages;
+    
+    // Если только одна страница, не показываем пагинацию
+    if ($total <= 1) {
+        return;
+    }
+    
+    // Текущая страница
+    $current = max(1, get_query_var('paged'));
+    
+    // Базовый URL для страниц
+    $base = get_pagenum_link(1);
+    
+    // Настройки по умолчанию
+    $defaults = array(
+        'total' => $total,
+        'current' => $current,
+        'show_all' => false,
+        'prev_next' => true,
+        'prev_text' => '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">Предыдущая</span>',
+        'next_text' => '<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="screen-reader-text">Следующая</span>',
+        'mid_size' => 2,
+        'end_size' => 1,
+        'type' => 'list',
+        'add_args' => array(),
+        'add_fragment' => '',
+        'before_page_number' => '<span class="meta-nav screen-reader-text">Страница </span>',
+        'after_page_number' => '',
+    );
+    
+    // Объединяем с пользовательскими настройками
+    $args = wp_parse_args($args, $defaults);
+    
+    // Выводим пагинацию в контейнере
+    echo '<div class="pagination-container">';
+    echo paginate_links($args);
+    echo '</div>';
+}

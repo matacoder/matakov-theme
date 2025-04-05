@@ -49,11 +49,15 @@
                 <?php
             endwhile;
 
+            echo '<div class="pagination-container">';
             the_posts_pagination(array(
-                'prev_text' => '<i class="fas fa-chevron-left"></i>',
-                'next_text' => '<i class="fas fa-chevron-right"></i>',
+                'prev_text' => '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">Предыдущая</span>',
+                'next_text' => '<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="screen-reader-text">Следующая</span>',
+                'mid_size'  => 2,
+                'before_page_number' => '<span class="meta-nav screen-reader-text">Страница </span>',
                 'class' => 'pagination justify-content-center',
             ));
+            echo '</div>';
 
         else :
             ?>

@@ -2,8 +2,42 @@
 
 <div class="col-lg-8">
     <main id="primary" class="site-main">
-        <?php
-        if (have_posts()) :
+        <?php if (have_posts()) : ?>
+            <header class="page-header mb-4">
+                <h1 class="page-title">
+                    <?php
+                    if (is_category()) {
+                        echo '<i class="fas fa-folder-open me-2"></i>' . single_cat_title('', false);
+                    } elseif (is_tag()) {
+                        echo '<i class="fas fa-tag me-2"></i>' . single_tag_title('', false);
+                    } elseif (is_author()) {
+                        echo '<i class="fas fa-user me-2"></i>';
+                        the_author();
+                    } elseif (is_date()) {
+                        echo '<i class="fas fa-calendar-alt me-2"></i>';
+                        if (is_day()) {
+                            printf(__('Архив: %s', 'matakov-theme'), get_the_date());
+                        } elseif (is_month()) {
+                            printf(__('Архив: %s', 'matakov-theme'), get_the_date(_x('F Y', 'monthly archives date format', 'matakov-theme')));
+                        } elseif (is_year()) {
+                            printf(__('Архив: %s', 'matakov-theme'), get_the_date(_x('Y', 'yearly archives date format', 'matakov-theme')));
+                        }
+                    } else {
+                        _e('Архив', 'matakov-theme');
+                    }
+                    ?>
+                </h1>
+                <?php
+                // Если есть описание категории, покажем его
+                if (is_category() || is_tag() && term_description()) : 
+                ?>
+                <div class="archive-description">
+                    <?php echo term_description(); ?>
+                </div>
+                <?php endif; ?>
+            </header>
+
+            <?php
             while (have_posts()) :
                 the_post();
                 ?>
@@ -29,34 +63,23 @@
                                         <?php the_post_thumbnail('medium', ['class' => 'img-fluid']); ?>
                                     </a>
                                 </div>
-                                <?php echo matakov_formatted_excerpt(20); ?>
+                                <?php echo matakov_formatted_excerpt(15); ?>
                             </div>
                         <?php else : ?>
                             <div class="col-12">
                                 <div class="post-content">
-                                    <?php echo matakov_formatted_excerpt(20); ?>
+                                    <?php echo matakov_formatted_excerpt(15); ?>
                                 </div>
                             </div>
                         <?php endif; ?>
                     </div>
-
-                    <footer class="entry-footer">
-                        <!-- Кнопка "Читать далее" уже добавляется функцией matakov_formatted_excerpt() -->
-                    </footer>
                 </article>
                 <?php
             endwhile;
 
-            echo '<div class="pagination-container">';
-            the_posts_pagination(array(
-                'prev_text' => '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">Предыдущая</span>',
-                'next_text' => '<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="screen-reader-text">Следующая</span>',
-                'mid_size'  => 2,
-                'before_page_number' => '<span class="meta-nav screen-reader-text">Страница </span>',
-                'class' => 'pagination justify-content-center',
-            ));
-            echo '</div>';
-            
+            // Используем нашу кастомную функцию пагинации
+            matakov_custom_pagination();
+
         else :
             ?>
             <div class="alert alert-info">
@@ -72,4 +95,4 @@
     <?php get_sidebar(); ?>
 </div>
 
-<?php get_footer(); ?>
+<?php get_footer(); ?> 

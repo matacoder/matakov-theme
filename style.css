@@ -4,7 +4,7 @@ Theme URI: https://matakov.com/
 Author: Dmitry Matakov
 Author URI: https://matakov.com/
 Description: Современная тема для сайта matakov.com. Основана на Bootstrap 5, с поддержкой различных виджетов, виджетных областей и кастомных страниц.
-Version: 1.1.6
+Version: 1.1.7
 Requires at least: 5.9
 Tested up to: 6.3
 Requires PHP: 7.4
@@ -693,25 +693,111 @@ img {
 }
 
 /* Пагинация */
+.pagination-container {
+  margin: 2.5rem 0;
+  text-align: center;
+}
+
 .pagination {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
   margin-top: 2rem;
-}
-
-.pagination .page-link {
-  color: var(--primary-color, #0366d6);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  padding: 0.5rem;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.05);
-  transition: all 0.2s;
 }
 
-.pagination .page-link:hover {
+.pagination .page-numbers,
+.pagination .page-item .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 6px;
+  color: #444;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+  margin: 0 0.15rem;
+  text-decoration: none;
+}
+
+.pagination .page-numbers:hover,
+.pagination .page-item .page-link:hover {
   background-color: rgba(3, 102, 214, 0.05);
-  color: var(--primary-color-hover, #024ea4);
+  color: var(--primary-color);
+  border-color: rgba(3, 102, 214, 0.15);
+  z-index: 2;
 }
 
+.pagination .page-numbers.current,
 .pagination .page-item.active .page-link {
-  background-color: var(--primary-color, #0366d6);
-  border-color: var(--primary-color, #0366d6);
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+  z-index: 3;
+}
+
+.pagination .page-numbers.dots {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+.pagination .page-item.disabled .page-link,
+.pagination .page-numbers.disabled {
+  color: #aaa;
+  pointer-events: none;
+  background-color: #f8f9fa;
+  border-color: #eee;
+}
+
+.pagination .prev i,
+.pagination .next i,
+.pagination .page-item:first-child .page-link i,
+.pagination .page-item:last-child .page-link i {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 575.98px) {
+  .pagination {
+    gap: 0.2rem;
+    padding: 0.4rem;
+  }
+  
+  .pagination .page-numbers,
+  .pagination .page-item .page-link {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.6rem;
+    font-size: 0.9rem;
+    margin: 0 0.1rem;
+  }
+  
+  /* Скрываем некоторые номера страниц на маленьких экранах */
+  .pagination .page-numbers:not(.prev):not(.next):not(.current) {
+    display: none;
+  }
+  
+  .pagination .page-item:not(:first-child):not(:last-child):not(.active) {
+    display: none;
+  }
+  
+  .pagination .page-item:first-child .page-link,
+  .pagination .page-item:last-child .page-link,
+  .pagination .page-numbers.prev,
+  .pagination .page-numbers.next,
+  .pagination .page-numbers.current,
+  .pagination .page-item.active .page-link {
+    display: flex;
+  }
 }
 
 /* Screen reader text */
