@@ -3,7 +3,7 @@ Theme Name: Matakov Theme
 Theme URI: https://matakov.com
 Author: Денис Матаков
 Description: Минималистичная тема блога в стиле дизайна mtkv.ru
-Version: 1.1.9
+Version: 1.2.0
 Requires at least: 5.9
 Tested up to: 6.7.2
 Requires PHP: 7.4
@@ -101,8 +101,8 @@ img {
 
 /* Шапка */
 .site-header {
-  padding: 1.5rem 15px 1rem;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 2rem 15px 1.5rem;
+  border-bottom: none;
   background-color: #fff;
 }
 
@@ -127,9 +127,9 @@ img {
 }
 
 .site-title {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   font-weight: normal;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.3rem;
   margin-top: 0;
   letter-spacing: -0.5px;
   line-height: 1.2;
@@ -154,18 +154,18 @@ img {
 
 /* Логотип сайта */
 .site-logo {
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .site-logo img {
-  max-height: 60px;
+  max-height: 80px;
   width: auto;
-  display: block; /* Предотвращает пробелы под изображением */
+  display: block;
 }
 
 /* Описание сайта */
 .site-description {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #6c757d;
   margin-top: 0;
   margin-bottom: 0.2rem;
@@ -209,7 +209,7 @@ img {
   background-color: var(--primary-color, #0366d6);
   margin-top: 0.5rem;
   margin-bottom: 2rem;
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: none;
   overflow: visible;
   position: relative;
@@ -328,7 +328,7 @@ img {
 @media (max-width: 991.98px) {
   /* Настройки шапки */
   .site-header {
-    padding: 1rem 15px;
+    padding: 1.5rem 15px;
   }
    
   .site-header .row.align-items-center {
@@ -336,7 +336,7 @@ img {
   }
    
   .site-logo img {
-    max-height: 50px;
+    max-height: 70px;
   }
 
   /* Меню навигации */
@@ -422,15 +422,15 @@ img {
 
 @media (max-width: 767.98px) {
   .site-header {
-    padding: 0.8rem 15px;
+    padding: 1.2rem 15px;
   }
   
   .site-title {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
   }
   
   .site-logo img {
-    max-height: 45px;
+    max-height: 60px;
   }
   
   .post-title {
@@ -438,7 +438,7 @@ img {
   }
   
   .site-description {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
   
   .post-inner {
@@ -487,19 +487,19 @@ img {
 
 @media (max-width: 575.98px) {
   .site-header {
-    padding: 0.6rem 15px;
+    padding: 1rem 15px;
   }
   
   .site-title {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
   
   .site-logo img {
-    max-height: 40px;
+    max-height: 50px;
   }
   
   .site-description {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
   
   .post-title {
@@ -538,8 +538,9 @@ img {
   background-color: #fff;
   border-radius: 0;
   box-shadow: none;
-  padding: 2rem;
+  padding: 2rem 0;
   margin-bottom: 2rem;
+  border: none;
 }
 
 /* Стили для записей и контента - без теней и прыжков */
@@ -551,7 +552,7 @@ img {
   background-color: #fff;
   border-radius: 0;
   box-shadow: none;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: none;
   overflow: hidden;
   transition: none;
 }
@@ -569,7 +570,7 @@ img {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
 }
 
 .post-thumbnail + .post-inner {
@@ -621,9 +622,9 @@ img {
   overflow: hidden;
   width: 100%;
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 соотношение сторон */
+  padding-bottom: 56.25%;
   background-color: #f8f9fa;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: none;
 }
 
 .post-thumbnail img {
@@ -695,9 +696,9 @@ img {
 /* Стиль кнопки читать далее */
 .more-link-wrapper {
   margin-top: auto;
-  padding: 0.75rem 1.5rem;
+  padding: 0;
   text-align: right;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: none;
 }
 
 .btn-primary {
@@ -906,13 +907,7 @@ img {
 
 /* Сайдбар */
 .sidebar {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 0;
-  box-shadow: none;
-  border: 1px solid rgba(0,0,0,0.05);
-  height: 100%;
-  margin-bottom: 2rem;
+  padding: 0;
 }
 
 .sidebar-widget {
@@ -924,22 +919,17 @@ img {
 }
 
 .widget-title {
-  font-size: 1.2rem;
-  font-weight: normal;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  font-size: 1.3rem;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: 600;
   position: relative;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.widget-title:after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 40px;
-  height: 2px;
-  background-color: var(--primary-color, #0366d6);
+.widget-title::after {
+  display: none;
 }
 
 .sidebar-widget ul {
@@ -978,28 +968,52 @@ img {
 
 /* Виджет категорий */
 .widget_categories ul li,
-.widget_archive ul li {
-  position: relative;
-  padding-right: 2rem !important;
-  list-style: none;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 0.8rem 0;
+.widget_archive ul li,
+.widget_meta ul li,
+.widget_pages ul li,
+.widget_recent_entries ul li,
+.widget_recent_comments ul li {
+  border-bottom: none;
+  padding: 0.5rem 0;
   transition: none;
 }
 
+.widget_categories ul li:first-child,
+.widget_archive ul li:first-child,
+.widget_meta ul li:first-child,
+.widget_pages ul li:first-child,
+.widget_recent_entries ul li:first-child,
+.widget_recent_comments ul li:first-child {
+  padding-top: 0;
+}
+
+.widget_categories ul li:last-child,
+.widget_archive ul li:last-child,
+.widget_meta ul li:last-child,
+.widget_pages ul li:last-child,
+.widget_recent_entries ul li:last-child,
+.widget_recent_comments ul li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 .widget_categories ul li:hover,
-.widget_archive ul li:hover {
+.widget_archive ul li:hover,
+.widget_meta ul li:hover,
+.widget_pages ul li:hover,
+.widget_recent_entries ul li:hover,
+.widget_recent_comments ul li:hover {
   padding-left: 0;
-  background-color: #f8f9fa;
+  background-color: transparent;
 }
 
 /* Подвал */
 .site-footer {
   padding: 1.5rem 15px;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: none;
   color: #666;
   font-size: 0.9rem;
-  background-color: #f8f9fa;
+  background-color: #fff;
   text-align: center;
 }
 
@@ -1089,9 +1103,9 @@ img {
   background-color: #f8f9fa;
   color: #212529;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 0;
   transition: all 0.3s ease;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: none;
 }
 
 .page-numbers a:hover,
@@ -1105,170 +1119,17 @@ img {
 .page-numbers .current,
 .page-numbers span.current,
 .nav-links span.current {
-  background-color: #007bff;
+  background-color: var(--primary-color, #0366d6);
   color: white;
-}
-
-.page-numbers .dots,
-.page-numbers span.dots,
-.nav-links .dots {
-  background-color: transparent;
-}
-
-.page-numbers .prev,
-.page-numbers .next,
-.nav-links .prev,
-.nav-links .next {
-  background-color: #f8f9fa;
-}
-
-.page-numbers .prev:hover,
-.page-numbers .next:hover,
-.nav-links .prev:hover,
-.nav-links .next:hover {
-  background-color: #e9ecef;
-}
-
-@media (max-width: 767.98px) {
-  .page-numbers a,
-  .page-numbers span,
-  .page-numbers .page-numbers,
-  .nav-links a,
-  .nav-links span {
-    min-width: 35px;
-    height: 35px;
-    margin: 0 3px 5px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .page-numbers a,
-  .page-numbers span,
-  .page-numbers .page-numbers,
-  .nav-links a,
-  .nav-links span {
-    min-width: 32px;
-    height: 32px;
-    padding: 0.3rem;
-    margin: 0 2px 5px;
-    font-size: 0.85rem;
-  }
-}
-
-/* Screen reader text */
-.screen-reader-text {
-  border: 0;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute !important;
-  width: 1px;
-  word-wrap: normal !important;
-}
-
-/* Адаптивность */
-@media (max-width: 1400px) {
-  .container {
-    max-width: 1140px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .container {
-    max-width: 960px;
-  }
-}
-
-@media (max-width: 992px) {
-  .container {
-    max-width: 720px;
-  }
-  
-  .sidebar {
-    margin-top: 2rem;
-  }
-   
-  .header-ad {
-    margin-top: 1rem;
-  }
-  
-  .post-meta {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .post-meta span {
-    margin-bottom: 0.3rem;
-  }
-  
-  .site-title {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    max-width: 540px;
-  }
-  
-  .footer-links {
-    margin-top: 1rem;
-    text-align: center !important;
-  }
-  
-  .site-info {
-    text-align: center;
-  }
-}
-
-@media (max-width: 576px) {
-  .container {
-    max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  
-  .post-title {
-    font-size: 1.4rem;
-  }
-}
-
-/* Добавление CSS переменных для темы */
-:root {
-  --primary-color: #0366d6;
-  --primary-color-hover: #024ea4;
-  --primary-color-light: rgba(3, 102, 214, 0.1);
-}
-
-/* Выравнивание текста и контента */
-.text-left { text-align: left; }
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.text-justify { text-align: justify; }
-
-/* Убираем лишние жирные стили */
-strong, b {
-  font-weight: 500; /* Чуть менее жирный, чем bold */
-}
-
-/* Категории и метки должны быть не жирными */
-.post-meta a,
-.post-categories a,
-.post-tags a {
-  font-weight: normal;
 }
 
 /* Заголовки страниц */
 .page-title,
 .archive-title {
-  font-size: 1.75rem;
+  font-size: 2rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: none;
   font-weight: normal;
 }
 
@@ -1342,10 +1203,10 @@ strong, b {
 /* Улучшенное отображение подвала */
 .site-footer {
   padding: 1.5rem 15px;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: none;
   color: #666;
   font-size: 0.9rem;
-  background-color: #f8f9fa;
+  background-color: #fff;
   text-align: center;
 }
 
@@ -1370,7 +1231,7 @@ strong, b {
 
 /* Стили для сайдбара */
 .sidebar {
-  padding: 1.5rem;
+  padding: 0;
 }
 
 .widget {
@@ -1378,8 +1239,8 @@ strong, b {
   background-color: #fff;
   border-radius: 0;
   box-shadow: none;
-  border: 1px solid rgba(0,0,0,0.05);
-  padding: 1.5rem;
+  border: none;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -1398,14 +1259,7 @@ strong, b {
 }
 
 .widget-title::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background-color: #007bff;
-  border-radius: 3px;
+  display: none;
 }
 
 /* Фиксим стили для рубрик в сайдбаре */
@@ -1693,4 +1547,121 @@ strong, b {
 /* Исправление для поискового поля в навигации */
 .navbar-search {
   border-top: none !important;
+}
+
+/* Screen reader text */
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* Адаптивность */
+@media (max-width: 1400px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 720px;
+  }
+  
+  .sidebar {
+    margin-top: 2rem;
+  }
+   
+  .header-ad {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 540px;
+  }
+  
+  .footer-links {
+    margin-top: 1rem;
+    text-align: center !important;
+  }
+  
+  .site-info {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+/* Добавление CSS переменных для темы */
+:root {
+  --primary-color: #0366d6;
+  --primary-color-hover: #024ea4;
+  --primary-color-light: rgba(3, 102, 214, 0.1);
+}
+
+/* Выравнивание текста и контента */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Убираем лишние жирные стили */
+strong, b {
+  font-weight: 500; /* Чуть менее жирный, чем bold */
+}
+
+/* Категории и метки должны быть не жирными */
+.post-meta a,
+.post-categories a,
+.post-tags a {
+  font-weight: normal;
+}
+
+/* Дополнительные стили для пагинации в мобильном режиме */
+@media (max-width: 767.98px) {
+  .page-numbers a,
+  .page-numbers span,
+  .page-numbers .page-numbers,
+  .nav-links a,
+  .nav-links span {
+    min-width: 35px;
+    height: 35px;
+    margin: 0 3px 5px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .page-numbers a,
+  .page-numbers span,
+  .page-numbers .page-numbers,
+  .nav-links a,
+  .nav-links span {
+    min-width: 32px;
+    height: 32px;
+    padding: 0.3rem;
+    margin: 0 2px 5px;
+    font-size: 0.85rem;
+  }
 }
