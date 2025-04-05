@@ -32,18 +32,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="post-content">
-                                    <?php
-                                    // Увеличиваем объем выводимого текста
-                                    add_filter('excerpt_length', function($length) { return 60; }, 999);
-                                    the_excerpt();
-                                    remove_filter('excerpt_length', function($length) { return 60; }, 999);
+                                    <?php 
+                                    // Используем наш новый метод вывода отрывка
+                                    echo matakov_formatted_excerpt(10); // Меньше строк при наличии миниатюры
                                     ?>
                                 </div>
                             </div>
                         <?php else : ?>
                             <div class="col-12">
                                 <div class="post-content">
-                                    <?php the_excerpt(); ?>
+                                    <?php echo matakov_formatted_excerpt(20); // Больше строк без миниатюры ?>
                                 </div>
                             </div>
                         <?php endif; ?>

@@ -39,11 +39,11 @@
                     <?php endif; ?>
 
                     <div class="post-content">
-                        <?php the_excerpt(); ?>
+                        <?php echo matakov_formatted_excerpt(15); ?>
                     </div>
 
                     <footer class="entry-footer">
-                        <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-sm"><?php _e('Читать далее →', 'matakov-theme'); ?></a>
+                        <!-- Кнопку "Читать далее" теперь добавляет наша функция matakov_formatted_excerpt() -->
                     </footer>
                 </article>
                 <?php

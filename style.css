@@ -3,7 +3,7 @@ Theme Name: Matakov Theme
 Theme URI: https://matakov.com
 Author: Денис Матаков
 Description: Минималистичная тема блога в стиле дизайна mtkv.ru
-Version: 1.1.4
+Version: 1.1.5
 Requires at least: 5.9
 Tested up to: 6.7.2
 Requires PHP: 7.4
@@ -445,7 +445,66 @@ img {
 }
 
 .post-content {
+  margin-bottom: 1.5rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.post-content p {
   margin-bottom: 1rem;
+}
+
+.post-content ul, 
+.post-content ol {
+  margin: 0 0 1.5em 1.5em;
+  padding-left: 1rem;
+}
+
+.post-content ul {
+  list-style: disc;
+}
+
+.post-content ol {
+  list-style: decimal;
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding: 0.5rem 0 0.5rem 1rem;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+  color: #666;
+  background-color: #f9f9f9;
+}
+
+.post-content pre {
+  background: #f5f5f5;
+  padding: 1rem;
+  overflow: auto;
+  font-family: monospace;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+
+.post-content code {
+  background: #f5f5f5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+}
+
+.more-link-wrapper {
+  margin-top: 1rem;
+}
+
+.more-link-wrapper .btn-primary {
+  border-radius: 4px;
 }
 
 /* Общие стили для изображений */

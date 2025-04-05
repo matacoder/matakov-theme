@@ -7,7 +7,7 @@ require get_template_directory() . '/inc/bootstrap-nav-walker.php';
 require get_template_directory() . '/inc/customizer.php';
 
 if (!defined('MATAKOV_VERSION')) {
-    define('MATAKOV_VERSION', '1.1.4');
+    define('MATAKOV_VERSION', '1.1.5');
 }
 
 /**
@@ -215,3 +215,118 @@ function matakov_block_editor_assets() {
     );
 }
 add_action('enqueue_block_editor_assets', 'matakov_block_editor_assets');
+
+/**
+ * Создает превью поста с сохранением форматирования и отступов
+ * 
+ * @param int $max_lines Максимальное количество строк для отображения
+ * @param string $more_text Текст для кнопки "Читать далее"
+ * @return string Отформатированное превью поста
+ */
+function matakov_formatted_excerpt($max_lines = 20, $more_text = 'Читать далее') {
+    global $post;
+    $content = $post->post_content;
+    
+    // Сохраняем шорткоды и форматирование
+    $content = apply_filters('the_content', $content);
+    
+    // Удаляем лишние обертки, которые могут добавлять блоки Gutenberg
+    $content = preg_replace('/<div class="wp-block[^>]*>(.*?)<\/div>/s', '$1', $content);
+    
+    // Разбиваем контент на параграфы
+    $paragraphs = preg_split('/<\/p>|<br\s*\/?>/i', $content);
+    
+    $output = '';
+    $lines_count = 0;
+    $reached_limit = false;
+    
+    foreach ($paragraphs as $paragraph) {
+        // Пропускаем пустые параграфы
+        if (trim(strip_tags($paragraph)) === '') {
+            continue;
+        }
+        
+        // Очищаем от лишних тегов, чтобы правильно посчитать строки
+        $clean_text = strip_tags($paragraph);
+        
+        // Грубая оценка количества строк (в среднем 100 символов на строку)
+        $estimated_lines = ceil(mb_strlen($clean_text) / 100);
+        
+        // Если после добавления этого параграфа превысим лимит строк
+        if ($lines_count + $estimated_lines > $max_lines) {
+            // Добавляем часть текста до лимита строк
+            $words = explode(' ', $clean_text);
+            $words_limit = min(count($words), floor(($max_lines - $lines_count) * 100 / 5)); // ~5 символов на слово
+            
+            if ($words_limit > 0) {
+                $partial_text = implode(' ', array_slice($words, 0, $words_limit));
+                // Восстанавливаем HTML-теги в начале параграфа
+                $pattern = preg_quote($clean_text, '/');
+                $paragraph = preg_replace('/^(.*)' . $pattern . '/s', '$1' . $partial_text, $paragraph, 1);
+                $output .= $paragraph . '...';
+            }
+            
+            $reached_limit = true;
+            break;
+        }
+        
+        // Иначе добавляем весь параграф
+        $output .= $paragraph . '</p>';
+        $lines_count += $estimated_lines;
+        
+        // Если достигли лимита после добавления этого параграфа
+        if ($lines_count >= $max_lines) {
+            $reached_limit = true;
+            break;
+        }
+    }
+    
+    // Восстанавливаем закрывающие теги
+    $output = force_balance_tags($output);
+    
+    // Добавляем кнопку "Читать далее", если контент был обрезан
+    if ($reached_limit) {
+        $more_link = sprintf(
+            '<p class="more-link-wrapper"><a href="%s" class="btn btn-primary btn-sm">%s &raquo;</a></p>',
+            esc_url(get_permalink()),
+            esc_html($more_text)
+        );
+        $output .= $more_link;
+    }
+    
+    return $output;
+}
+
+/**
+ * Заменяет стандартный вывод превью на форматированный
+ */
+function matakov_custom_excerpt() {
+    echo matakov_formatted_excerpt();
+}
+
+/**
+ * Изменяет стандартный вывод превью в теме
+ */
+function matakov_excerpt_filter($excerpt) {
+    if (is_single() || is_page()) {
+        return $excerpt;
+    }
+    
+    if (has_excerpt()) {
+        // Если есть отрывок, заданный вручную, оставляем его
+        return $excerpt . sprintf(
+            '<p class="more-link-wrapper"><a href="%s" class="btn btn-primary btn-sm">%s &raquo;</a></p>',
+            esc_url(get_permalink()),
+            esc_html__('Читать далее', 'matakov-theme')
+        );
+    } else {
+        // Используем наш форматированный отрывок
+        return matakov_formatted_excerpt();
+    }
+}
+add_filter('the_excerpt', 'matakov_excerpt_filter');
+
+/**
+ * Отключает автоматическое добавление абзацев в короткие описания
+ */
+remove_filter('the_excerpt', 'wpautop');
