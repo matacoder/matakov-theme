@@ -99,8 +99,8 @@ class Bootstrap_Nav_Walker extends Walker_Nav_Menu {
             // Url элемента с подменю
             $atts['href'] = !empty($menu_item->url) && $menu_item->url !== '#' ? $menu_item->url : '#';
             $atts['class'] = 'nav-link dropdown-toggle';
-            $atts['data-bs-toggle'] = 'dropdown';
-            $atts['data-bs-auto-close'] = 'outside';
+            // Не используем атрибуты data-bs-* на десктопах, ими будет управлять JavaScript
+            // для мобильных они будут добавлены с помощью JS
             $atts['aria-expanded'] = 'false';
             $atts['role'] = 'button';
             $atts['id'] = 'navbarDropdown' . $menu_item->ID;

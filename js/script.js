@@ -42,97 +42,84 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обработка выпадающих меню
     const initDropdowns = function() {
-        // Находим все элементы .dropdown-toggle
-        const dropdownToggleList = document.querySelectorAll('.dropdown-toggle');
-        
-        // Создаем массив выпадающих меню
-        const dropdownList = [];
-        
-        // Принудительно инициализируем все выпадающие меню через Bootstrap API
-        if (typeof bootstrap !== 'undefined') {
-            dropdownToggleList.forEach(function(dropdownToggle) {
-                const dropdown = new bootstrap.Dropdown(dropdownToggle, {
-                    autoClose: window.innerWidth < 992 ? 'true' : 'outside'
-                });
-                // Сохраняем экземпляр для дальнейшего использования
-                dropdownList.push(dropdown);
-            });
-        }
-        
-        // Для десктопов (>= 992px) используем hover для открытия меню
-        if (window.innerWidth >= 992) {
+        // Инициализируем все выпадающие меню для десктопов
+        if (window.innerWidth >= 992 && typeof bootstrap !== 'undefined') {
+            // Находим все элементы выпадающего меню
             const dropdownItems = document.querySelectorAll('.dropdown');
-            dropdownItems.forEach(item => {
-                const dropdownToggle = item.querySelector('.dropdown-toggle');
+            
+            dropdownItems.forEach(function(item) {
+                // Найдем кнопку переключения и меню
+                const toggleBtn = item.querySelector('.dropdown-toggle');
                 const dropdownMenu = item.querySelector('.dropdown-menu');
-                let dropdownInstance = null;
                 
-                // Найдем экземпляр Bootstrap Dropdown
-                if (dropdownToggle && typeof bootstrap !== 'undefined') {
-                    dropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle);
-                }
+                if (!toggleBtn || !dropdownMenu) return;
                 
+                // Отключим data атрибуты Bootstrap, чтобы управлять вручную
+                toggleBtn.removeAttribute('data-bs-toggle');
+                toggleBtn.removeAttribute('data-bs-auto-close');
+                
+                // Показываем меню при наведении
                 item.addEventListener('mouseenter', function() {
-                    if (dropdownInstance) {
-                        dropdownInstance.show();
-                    } else if (dropdownMenu) {
-                        dropdownMenu.classList.add('show');
-                    }
+                    dropdownMenu.classList.add('show');
                 });
                 
+                // Скрываем меню при уходе курсора
                 item.addEventListener('mouseleave', function() {
-                    // Не закрываем подменю сразу, чтобы пользователь успел перейти к нему
-                    setTimeout(() => {
-                        // Проверяем, не находится ли курсор над элементом
+                    // Добавляем задержку, чтобы избежать мерцания
+                    setTimeout(function() {
                         if (!item.matches(':hover')) {
-                            if (dropdownInstance) {
-                                dropdownInstance.hide();
-                            } else if (dropdownMenu) {
-                                dropdownMenu.classList.remove('show');
-                            }
+                            dropdownMenu.classList.remove('show');
                         }
                     }, 200);
                 });
                 
-                // Обработка клика по ссылкам с подменю
-                if (dropdownToggle) {
-                    dropdownToggle.addEventListener('click', function(e) {
-                        if (this.getAttribute('href') && this.getAttribute('href') !== '#') {
-                            // Если есть реальный URL, позволяем переход
-                            return true;
-                        }
-                        // Иначе предотвращаем действие по умолчанию
-                        e.preventDefault();
-                    });
-                }
+                // Обработка клика для ссылок
+                toggleBtn.addEventListener('click', function(e) {
+                    // Если есть реальный URL и это не #, то позволяем навигацию
+                    if (toggleBtn.getAttribute('href') && toggleBtn.getAttribute('href') !== '#') {
+                        return true;
+                    }
+                    // Иначе предотвращаем действие по умолчанию
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Переключаем видимость меню при клике
+                    dropdownMenu.classList.toggle('show');
+                });
+            });
+        } 
+        // Для мобильных устройств используем нативный Bootstrap dropdown
+        else if (typeof bootstrap !== 'undefined') {
+            // Убедимся, что все кнопки меню на мобильных имеют атрибут data-bs-toggle
+            document.querySelectorAll('.dropdown-toggle').forEach(function(button) {
+                button.setAttribute('data-bs-toggle', 'dropdown');
+            });
+            
+            // Инициализируем все выпадающие меню через Bootstrap
+            document.querySelectorAll('.dropdown-toggle').forEach(function(dropdownToggle) {
+                new bootstrap.Dropdown(dropdownToggle);
             });
         }
-        
-        // Закрытие выпадающих меню при клике вне их
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown') && window.innerWidth >= 992) {
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                    menu.classList.remove('show');
-                });
-            }
-        });
     };
     
     // Инициализируем выпадающие меню при загрузке
     initDropdowns();
     
     // И при изменении размера окна
+    let resizeTimer;
     window.addEventListener('resize', function() {
-        initDropdowns();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            initDropdowns();
+        }, 250);
     });
     
-    // Исправление активности подменю на мобильных устройствах
-    document.querySelectorAll('.dropdown-toggle').forEach(function(element) {
-        element.addEventListener('click', function() {
-            if (window.innerWidth < 992) {
-                // На мобильных устройствах позволяем Bootstrap API управлять меню
-                // Дополнительное действие не требуется
-            }
-        });
+    // Закрытие всех меню при клике вне меню
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth >= 992 && !e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu.show').forEach(function(menu) {
+                menu.classList.remove('show');
+            });
+        }
     });
 });

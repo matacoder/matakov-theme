@@ -3,7 +3,7 @@ Theme Name: Matakov Theme
 Theme URI: https://matakov.com
 Author: Денис Матаков
 Description: Минималистичная тема блога в стиле дизайна mtkv.ru
-Version: 1.1.1
+Version: 1.1.2
 Requires at least: 5.9
 Tested up to: 6.7.2
 Requires PHP: 7.4
@@ -150,7 +150,9 @@ img {
   margin-top: 1rem;
   border-radius: 6px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  z-index: 1030;
 }
 
 .main-navigation .navbar {
@@ -178,7 +180,9 @@ img {
   background-color: #fff;
   margin-top: 0;
   display: none;
-  z-index: 1000;
+  z-index: 1035;
+  min-width: 12rem;
+  left: 0;
 }
 
 .main-navigation .navbar-nav .dropdown-menu.show {
@@ -190,6 +194,7 @@ img {
   color: #333;
   font-weight: normal;
   transition: background-color 0.2s, color 0.2s;
+  white-space: normal;
 }
 
 .main-navigation .navbar-nav .dropdown-item:hover,
@@ -286,6 +291,11 @@ img {
   .main-navigation .dropdown-item:focus {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff !important;
+  }
+
+  .navbar-collapse {
+    z-index: 1040;
+    position: relative;
   }
 }
 

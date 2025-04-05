@@ -4,11 +4,24 @@
 
 /* Стили для подменю на десктопах */
 @media (min-width: 992px) {
+  /* Убедимся, что родительский элемент имеет позиционирование */
+  .dropdown {
+    position: relative;
+  }
+  
+  /* Повышаем z-index для всего меню */
+  .main-navigation {
+    position: relative;
+    z-index: 1030;
+  }
+  
   /* Меню сделаем видимым при наведении только когда оно уже имеет класс .show
      который добавляется через JavaScript */
   .dropdown-menu.show {
     display: block;
     animation: fadeIn 0.3s ease-in-out;
+    z-index: 1035;
+    position: absolute;
   }
 
   /* Анимация появления */
@@ -26,6 +39,12 @@
 
 /* Стили для мобильного меню */
 @media (max-width: 991.98px) {
+  /* Повышаем z-index для мобильного меню */
+  .main-navigation {
+    position: relative;
+    z-index: 1030;
+  }
+  
   /* Стрелка переключения */
   .dropdown-toggle::after {
     float: right;
@@ -38,6 +57,7 @@
     padding-left: 15px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     background-color: transparent;
+    z-index: 1035;
   }
   
   /* Стили для пунктов выпадающего меню на мобильных */
