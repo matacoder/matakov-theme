@@ -7,7 +7,7 @@ require get_template_directory() . '/inc/bootstrap-nav-walker.php';
 require get_template_directory() . '/inc/customizer.php';
 
 if (!defined('MATAKOV_VERSION')) {
-    define('MATAKOV_VERSION', '1.1.5');
+    define('MATAKOV_VERSION', '1.1.6');
 }
 
 /**

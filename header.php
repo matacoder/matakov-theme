@@ -14,7 +14,7 @@
     <header id="masthead" class="site-header">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="site-branding">
                         <?php
                         if (has_custom_logo()) :
@@ -26,7 +26,7 @@
                         else :
                         ?>
                             <div class="site-title-wrapper">
-                                <h1 class="site-title display-5">
+                                <h1 class="site-title">
                                     <a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
                                 </h1>
                             
@@ -49,7 +49,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <?php if (is_active_sidebar('header-ad')) : ?>
                         <div class="header-ad-container">
                             <?php dynamic_sidebar('header-ad'); ?>

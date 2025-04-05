@@ -23,32 +23,25 @@
 
                     <div class="row post-content-wrapper">
                         <?php if (has_post_thumbnail()) : ?>
-                            <div class="col-md-6">
-                                <div class="post-thumbnail">
+                            <div class="post-content">
+                                <div class="post-thumbnail float-md-start me-md-4 mb-3">
                                     <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail('medium_large', ['class' => 'img-fluid']); ?>
+                                        <?php the_post_thumbnail('medium', ['class' => 'img-fluid']); ?>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="post-content">
-                                    <?php 
-                                    // Используем наш новый метод вывода отрывка
-                                    echo matakov_formatted_excerpt(10); // Меньше строк при наличии миниатюры
-                                    ?>
-                                </div>
+                                <?php echo matakov_formatted_excerpt(20); ?>
                             </div>
                         <?php else : ?>
                             <div class="col-12">
                                 <div class="post-content">
-                                    <?php echo matakov_formatted_excerpt(20); // Больше строк без миниатюры ?>
+                                    <?php echo matakov_formatted_excerpt(20); ?>
                                 </div>
                             </div>
                         <?php endif; ?>
                     </div>
 
                     <footer class="entry-footer">
-                        <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-sm"><?php _e('Читать далее →', 'matakov-theme'); ?></a>
+                        <!-- Кнопка "Читать далее" уже добавляется функцией matakov_formatted_excerpt() -->
                     </footer>
                 </article>
                 <?php

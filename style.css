@@ -1,11 +1,12 @@
 /*
 Theme Name: Matakov Theme
-Theme URI: https://matakov.com
-Author: Денис Матаков
-Description: Минималистичная тема блога в стиле дизайна mtkv.ru
-Version: 1.1.5
+Theme URI: https://matakov.com/
+Author: Dmitry Matakov
+Author URI: https://matakov.com/
+Description: Современная тема для сайта matakov.com. Основана на Bootstrap 5, с поддержкой различных виджетов, виджетных областей и кастомных страниц.
+Version: 1.1.6
 Requires at least: 5.9
-Tested up to: 6.7.2
+Tested up to: 6.3
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -89,14 +90,14 @@ img {
 
 /* Шапка */
 .site-header {
-  padding: 1.5rem 15px 1rem;
+  padding: 1.2rem 15px 0.8rem;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   background-color: #fff;
 }
 
 /* Улучшенное выравнивание в строке шапки */
 .site-header .row.align-items-center {
-  min-height: 80px; /* Фиксированная минимальная высота строки */
+  min-height: 70px; /* Уменьшена минимальная высота строки */
 }
 
 .site-branding {
@@ -114,7 +115,7 @@ img {
 }
 
 .site-title {
-  font-size: 2rem;
+  font-size: 1.8rem; /* Уменьшен размер шрифта */
   font-weight: normal;
   margin-bottom: 0.1rem;
   margin-top: 0;
@@ -139,27 +140,27 @@ img {
 
 /* Логотип сайта */
 .site-logo {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
 
 .site-logo img {
-  max-height: 50px;
+  max-height: 45px; /* Еще меньше размер логотипа */
   width: auto;
   display: block; /* Предотвращает пробелы под изображением */
 }
 
 /* Описание сайта */
 .site-description {
-  font-size: 1rem;
+  font-size: 0.9rem; /* Уменьшен размер шрифта */
   color: #6c757d;
   margin-top: 0;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   letter-spacing: 0.02em;
   font-style: normal;
 }
 
 .site-description-wrapper {
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
 }
 
 /* Область для рекламы */
@@ -509,13 +510,17 @@ img {
 
 /* Общие стили для изображений */
 .post-thumbnail {
-  position: relative;
-  margin-bottom: 1.2rem;
-  border: none;
-  border-radius: 8px;
   overflow: hidden;
+  border-radius: 8px;
   background-color: #f8f9fa;
   box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+/* Специальные стили для обтекания изображения текстом */
+.post-thumbnail.float-md-start {
+  max-width: 350px;
+  margin-bottom: 1rem;
+  margin-right: 1.5rem;
 }
 
 .post-thumbnail img {
@@ -532,9 +537,27 @@ img {
 .post-content img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
   margin: 1rem 0;
+  border-radius: 4px;
   border: 1px solid #e9ecef;
+}
+
+/* Форматированное превью постов */
+.post-content {
+  margin-bottom: 1.5rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.post-content p {
+  margin-bottom: 1rem;
+}
+
+/* Добавим расстояние между текстом и изображением */
+.post-content::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .btn {
