@@ -7,7 +7,7 @@ require get_template_directory() . '/inc/bootstrap-nav-walker.php';
 require get_template_directory() . '/inc/customizer.php';
 
 if (!defined('MATAKOV_VERSION')) {
-    define('MATAKOV_VERSION', '1.1.2');
+    define('MATAKOV_VERSION', '1.1.4');
 }
 
 /**
@@ -54,7 +54,7 @@ function matakov_setup() {
     ));
     
     // Поддержка административного бара
-    add_theme_support('admin-bar', array('callback' => '__return_false'));
+    add_theme_support('admin-bar', array('callback' => '__return_true'));
     
     // Поддержка избранного изображения для блогов
     add_theme_support('custom-header');

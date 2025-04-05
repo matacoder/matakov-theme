@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Ошибка: Bootstrap не загружен! Меню может работать некорректно.");
     }
     
+    // Проверка и обработка админ-бара WordPress
+    if (document.body.classList.contains('admin-bar')) {
+        // Если есть админ-бар, установим правильные отступы
+        const adminBarHeight = document.getElementById('wpadminbar') ? 
+                              document.getElementById('wpadminbar').offsetHeight : 0;
+        
+        if (adminBarHeight > 0) {
+            document.querySelector('.site-container').style.marginTop = adminBarHeight + 'px';
+            
+            // Обновление отступа при изменении размера окна
+            window.addEventListener('resize', function() {
+                const newAdminBarHeight = document.getElementById('wpadminbar') ? 
+                                         document.getElementById('wpadminbar').offsetHeight : 0;
+                document.querySelector('.site-container').style.marginTop = newAdminBarHeight + 'px';
+            });
+        }
+    }
+    
     // Добавляем Bootstrap классы к элементам WordPress
     
     // Таблицы

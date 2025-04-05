@@ -3,7 +3,7 @@ Theme Name: Matakov Theme
 Theme URI: https://matakov.com
 Author: Денис Матаков
 Description: Минималистичная тема блога в стиле дизайна mtkv.ru
-Version: 1.1.2
+Version: 1.1.4
 Requires at least: 5.9
 Tested up to: 6.7.2
 Requires PHP: 7.4
@@ -21,6 +21,37 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
+}
+
+/* Стили для админ-бара WordPress */
+.admin-bar .site-container {
+  margin-top: 32px; /* Высота админ-бара на десктопах */
+}
+
+/* Настройка z-index для правильного отображения элементов */
+#wpadminbar {
+  z-index: 9999 !important; /* Наивысший z-index */
+}
+
+.admin-bar .main-navigation {
+  /* Отступ от админ-бара при скроллинге (для фиксированных элементов) */
+  top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+  .admin-bar .site-container {
+    margin-top: 46px; /* Высота админ-бара на мобильных */
+  }
+  
+  .admin-bar .main-navigation {
+    top: 46px; /* Отступ на мобильных устройствах */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .admin-bar .main-navigation {
+    top: 0; /* На малых экранах админ-бар становится нефиксированным при скролле */
+  }
 }
 
 .site-container {
@@ -58,34 +89,34 @@ img {
 
 /* Шапка */
 .site-header {
-  padding: 2rem 15px 1.5rem;
+  padding: 1.5rem 15px 1rem;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   background-color: #fff;
+}
+
+/* Улучшенное выравнивание в строке шапки */
+.site-header .row.align-items-center {
+  min-height: 80px; /* Фиксированная минимальная высота строки */
 }
 
 .site-branding {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: center;
 }
 
-.site-logo {
-  margin-bottom: 0.5rem;
-}
-
-.site-logo img {
-  max-height: 60px;
-  width: auto;
-}
-
+/* Для страниц без логотипа - оформление заголовка */
 .site-title-wrapper {
   display: flex;
   flex-direction: column;
+  margin-bottom: 0;
 }
 
 .site-title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: normal;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
   margin-top: 0;
   letter-spacing: -0.5px;
   line-height: 1.2;
@@ -106,30 +137,42 @@ img {
   filter: brightness(1.1);
 }
 
+/* Логотип сайта */
+.site-logo {
+  margin-bottom: 0.3rem;
+}
+
+.site-logo img {
+  max-height: 50px;
+  width: auto;
+  display: block; /* Предотвращает пробелы под изображением */
+}
+
+/* Описание сайта */
 .site-description {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #6c757d;
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   letter-spacing: 0.02em;
-  font-style: normal; /* Явно задаем нормальный стиль шрифта (без курсива) */
+  font-style: normal;
 }
 
 .site-description-wrapper {
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 
 /* Область для рекламы */
 .header-ad {
   background-color: #f8f9fa;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 4px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #e9ecef;
-  height: 90px;
+  height: 80px;
 }
 
 .header-ad-container {
@@ -147,7 +190,7 @@ img {
 /* Навигация */
 .main-navigation {
   background-color: var(--primary-color, #0366d6);
-  margin-top: 1rem;
+  margin-top: 0.75rem; /* Уменьшен отступ сверху */
   border-radius: 6px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   overflow: visible;
@@ -296,6 +339,58 @@ img {
   .navbar-collapse {
     z-index: 1040;
     position: relative;
+  }
+
+  .site-header {
+    padding: 1rem 15px; /* Меньше отступы на мобильных */
+  }
+  
+  .site-header .row.align-items-center {
+    min-height: auto; /* Убираем фиксированную высоту на мобильных */
+  }
+  
+  .site-title {
+    font-size: 1.75rem; /* Меньше размер шрифта заголовка */
+  }
+  
+  .site-description {
+    font-size: 0.9rem; /* Меньше размер шрифта описания */
+  }
+  
+  .header-ad {
+    margin-top: 0.75rem;
+    height: 70px; /* Уменьшенная высота блока рекламы */
+  }
+  
+  .header-ad-container {
+    justify-content: center; /* Центрируем на мобильных */
+  }
+
+  .main-navigation {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .site-header {
+    padding: 0.75rem 15px;
+  }
+  
+  .site-title {
+    font-size: 1.5rem;
+  }
+  
+  .header-ad {
+    height: 60px;
+  }
+  
+  .footer-links {
+    margin-top: 1rem;
+    text-align: center !important;
+  }
+  
+  .site-info {
+    text-align: center;
   }
 }
 
