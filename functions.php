@@ -7,7 +7,7 @@ require get_template_directory() . '/inc/bootstrap-nav-walker.php';
 require get_template_directory() . '/inc/customizer.php';
 
 if (!defined('MATAKOV_VERSION')) {
-    define('MATAKOV_VERSION', '1.1.7');
+    define('MATAKOV_VERSION', '1.1.9');
 }
 
 /**
@@ -85,10 +85,10 @@ add_action('after_setup_theme', 'matakov_setup');
  */
 function matakov_scripts() {
     // Bootstrap CSS
-    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css', array(), '5.3.2');
+    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3');
     
     // Font Awesome для иконок
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1');
     
     // Основной стиль темы
     wp_enqueue_style('matakov-style', get_stylesheet_uri(), array('bootstrap'), MATAKOV_VERSION);
@@ -97,13 +97,13 @@ function matakov_scripts() {
     wp_enqueue_style('matakov-menu', get_template_directory_uri() . '/css/custom-menu.css', array('matakov-style'), MATAKOV_VERSION);
     
     // Google шрифты Inter
-    wp_enqueue_style('matakov-google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap', array(), null);
+    wp_enqueue_style('matakov-google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap', array(), null);
     
     // jQuery (используем версию из WordPress)
     wp_enqueue_script('jquery');
     
     // Bootstrap JS + Popper
-    wp_enqueue_script('bootstrap-bundle', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.2', true);
+    wp_enqueue_script('bootstrap-bundle', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.3.3', true);
     
     // Основной скрипт темы
     wp_enqueue_script('matakov-script', get_template_directory_uri() . '/js/script.js', array('jquery', 'bootstrap-bundle'), MATAKOV_VERSION, true);
@@ -130,7 +130,7 @@ function matakov_widgets_init() {
         'name'          => esc_html__('Сайдбар', 'matakov-theme'),
         'id'            => 'sidebar-1',
         'description'   => esc_html__('Добавьте виджеты сюда.', 'matakov-theme'),
-        'before_widget' => '<section id="%1$s" class="sidebar-widget %2$s">',
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
         'after_title'   => '</h3>',
@@ -287,7 +287,7 @@ function matakov_formatted_excerpt($max_lines = 20, $more_text = 'Читать �
     // Добавляем кнопку "Читать далее", если контент был обрезан
     if ($reached_limit) {
         $more_link = sprintf(
-            '<p class="more-link-wrapper"><a href="%s" class="btn btn-primary btn-sm">%s &raquo;</a></p>',
+            '<div class="more-link-wrapper"><a href="%s" class="btn btn-primary btn-sm">%s <i class="fas fa-arrow-right"></i></a></div>',
             esc_url(get_permalink()),
             esc_html($more_text)
         );
@@ -315,7 +315,7 @@ function matakov_excerpt_filter($excerpt) {
     if (has_excerpt()) {
         // Если есть отрывок, заданный вручную, оставляем его
         return $excerpt . sprintf(
-            '<p class="more-link-wrapper"><a href="%s" class="btn btn-primary btn-sm">%s &raquo;</a></p>',
+            '<div class="more-link-wrapper"><a href="%s" class="btn btn-primary btn-sm">%s <i class="fas fa-arrow-right"></i></a></div>',
             esc_url(get_permalink()),
             esc_html__('Читать далее', 'matakov-theme')
         );
@@ -346,7 +346,7 @@ function matakov_custom_pagination($query = null, $args = array()) {
     }
     
     // Получаем общее количество страниц
-    $total = $query->max_num_pages;
+    $total = isset($query->max_num_pages) ? $query->max_num_pages : 1;
     
     // Если только одна страница, не показываем пагинацию
     if ($total <= 1) {
@@ -354,13 +354,24 @@ function matakov_custom_pagination($query = null, $args = array()) {
     }
     
     // Текущая страница
-    $current = max(1, get_query_var('paged'));
+    $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+    if ($paged == 0 && is_paged()) {
+        $paged = get_query_var('page') ? get_query_var('page') : 1;
+    }
+    $current = max(1, $paged);
     
     // Базовый URL для страниц
-    $base = get_pagenum_link(1);
+    $pagenum_link = html_entity_decode(get_pagenum_link());
+    $base = str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999)));
+    
+    // Удаляем хеш из URL
+    $base = remove_query_arg('pagepage', $base);
+    $base = remove_query_arg('pg', $base);
     
     // Настройки по умолчанию
     $defaults = array(
+        'base' => $base,
+        'format' => '',
         'total' => $total,
         'current' => $current,
         'show_all' => false,
@@ -374,7 +385,14 @@ function matakov_custom_pagination($query = null, $args = array()) {
         'add_fragment' => '',
         'before_page_number' => '<span class="meta-nav screen-reader-text">Страница </span>',
         'after_page_number' => '',
+        'class' => 'pagination',
     );
+    
+    // Если есть поисковый запрос, добавляем его к аргументам
+    if (get_query_var('s')) {
+        $search_query = get_query_var('s');
+        $defaults['add_args'] = array('s' => urlencode($search_query));
+    }
     
     // Объединяем с пользовательскими настройками
     $args = wp_parse_args($args, $defaults);
@@ -384,3 +402,23 @@ function matakov_custom_pagination($query = null, $args = array()) {
     echo paginate_links($args);
     echo '</div>';
 }
+
+/**
+ * Исправление нумерации страниц для виджета рубрик
+ */
+function matakov_category_count_span($links) {
+    $links = str_replace('</a> (', '</a><span class="count">', $links);
+    $links = str_replace(')', '</span>', $links);
+    return $links;
+}
+add_filter('wp_list_categories', 'matakov_category_count_span');
+
+/**
+ * Исправление нумерации страниц для виджета архивов
+ */
+function matakov_archive_count_span($links) {
+    $links = str_replace('</a>&nbsp;(', '</a><span class="count">', $links);
+    $links = str_replace(')', '</span>', $links);
+    return $links;
+}
+add_filter('get_archives_link', 'matakov_archive_count_span');
